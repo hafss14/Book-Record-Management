@@ -2,12 +2,16 @@
 
 This is a book record management API backend for the management of records and books 
 
+## API documentation link 
+
+https://documenter.getpostman.com/view/19949898/2s8YmHwjzu
+
 # Routes and Endpoints
 
 
 
 ## /users
-POST : create a new user
+POST : create a new user 
 GET : Get all list of users
 
 ## /users/{id}
