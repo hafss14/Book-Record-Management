@@ -45,6 +45,7 @@ GET :  all issued books with fine
 Basic (3 months)
 Standard (6 months)
 Premium  (12 months)
+NOTE : dates will be in format mm/dd/yyyy
 
 If the subscription date is 01/10/21
 and subscription type is Standard

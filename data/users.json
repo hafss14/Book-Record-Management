@@ -8,7 +8,7 @@
             "issuedBook": "1",
             "issuedDate": "04/01/2022",
             "returnDate": "05/01/2022",
-            "subscriptionType": "Premium",
+            "subscriptionType": "premium",
             "subscriptionDate": "04/01/2022"
         },
         {
@@ -30,7 +30,7 @@
             "issuedBook": "3",
             "issuedDate": "01/07/2021",
             "returnDate": "01/10/2021",
-            "subscriptionType": "Basic",
+            "subscriptionType": "premium",
             "subscriptionDate": "01/01/2022"
         },
         {

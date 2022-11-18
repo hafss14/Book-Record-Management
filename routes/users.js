@@ -27,7 +27,7 @@ router.get("/", (req, res) => {
  * Parameters : id
  */
 
-router.get('/:id', (req, res) => {
+router.get("/:id", (req, res) => {
     const { id } = req.params
     const user = users.find((each) => each.id === id);
     if (!user) {
@@ -86,11 +86,15 @@ router.post("/", (req, res) => {
  * Parameters : id
  */
 
-router.put('/:id', (req, res) => {
+router.put("/:id", (req, res) => {
     const { id } = req.params;
     const { data } = req.body;
+
     const user = users.find((each) => each.id === id);
-    if (!user) return res.status(404).json({ success: false, message: "user not found" });
+
+    if (!user)
+        return res.status(404).json({ success: false, message: "user not found" });
+
     const updatedUser = users.map((each) => {
         if (each.id === id) {
             return {
@@ -130,6 +134,92 @@ router.delete('/:id', (req, res) => {
     users.splice(index, 1);
     return res.status(202).json({ sucess: true, data: users });
 })
+
+/** 
+ * Route: /subscription-details/:id
+ * Method : DELETE
+ * Description : Get all users subscription details
+ * Access : Public
+ * Parameters : id
+ */
+
+router.get("/subscription-details/:id", (req, res) => {
+    const { id } = req.params;
+
+    const user = users.find((each) => each.id === id);
+
+    if (!user)
+        return res.status(404).json({
+            success: false,
+            message: "user not found",
+
+        });
+
+    const getDateInDays = (data = "") => {
+        let date;
+        if (data === "") {
+            // current date
+            date = new Date();
+        } else {
+            // getting date on basis of data variable
+            date = new Date(data);
+        }
+        let days = Math.floor(date / (1000 * 60 * 60 * 24));
+        return days;
+    };
+
+    const subscriptionType = (date) => {
+        if (user.subscriptionType === "Basic") {
+            date = date + 90;
+        } else if (user.subscriptionType === "standard") {
+            date = date + 180;
+        } else if (user.subscriptionType === "premium") {
+            date = date + 365;
+        }
+        return date;
+
+
+
+    };
+
+    // subscription expiration calculation
+    // january 1, 1970, UTC. //milliseconds
+    let returnDate = getDateInDays(user.returnDate)
+    let currentDate = getDateInDays();
+    let subscriptionDate = getDateInDays(user.subscriptionDate);
+    let subscriptionExpiration = subscriptionType(subscriptionDate);
+
+    console.log("Return Date", returnDate);
+    console.log("Current Date", currentDate);
+    console.log("Subscription Date", subscriptionDate);
+    console.log("Subscription expiry Date", subscriptionExpiration);
+
+    const data = {
+        ...user,
+        subscriptionExpired: subscriptionExpiration < currentDate,
+        daysLeftForExpiration:
+            subscriptionExpiration <= currentDate
+                ? 0
+                : subscriptionExpiration - currentDate,
+        fine:
+            returnDate < currentDate
+                ? subscriptionExpiration <= currentDate
+                    ? 200
+                    : 100
+                : 0,
+
+
+    };
+
+    res.status(200).json({
+        success: true,
+        data,
+
+
+    })
+});
+
+
 
 
 module.exports = router;
