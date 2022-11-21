@@ -1,4 +1,9 @@
 const express = require("express");
+
+const dotenv = require("dotenv");
+// database  connection 
+const DbConnection = require("./databaseConnection");
+
 // JSON data import
 const { users } = require("./data/users.json");
 
@@ -6,13 +11,13 @@ const { users } = require("./data/users.json");
 const usersRouter = require("./routes/users");
 const booksRouter = require("./routes/books");
 
-
+dotenv.config();
 
 const app = express();
 
 const PORT = 8081;
-
 app.use(express.json());
+DbConnection();
 
 app.get("/", (req, res) => {
     res.status(200).json({
@@ -156,5 +161,6 @@ app.get("*", (req, res) => {
 });
 
 app.listen(PORT, () => {
+
     console.log(`Server is running at port ${PORT}`);
 });
