@@ -42,8 +42,12 @@ exports.createNewUser = async (req, res) => {
     return res.status(201).json({
         success: true,
         data: newUser,
+
+
     });
+    console.Log("data");
 };
+
 
 exports.updateUserById = async (req, res) => {
     const { id } = req.params;

@@ -7,6 +7,7 @@ const {
     createNewUser,
     getSubscriptionDetailsById,
 } = require("../controllers/user-controller");
+
 const { users } = require("../data/users.json");
 
 const router = express.Router();
